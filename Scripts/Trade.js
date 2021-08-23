@@ -12,17 +12,21 @@ module.exports = async done => {
   try {
     const [admin, _] = await web3.eth.getAccounts();
     console.log(admin)
+
     const router = await Router.at(ROUTER_ADDRESS);
     const weth = await Weth.at(WETH_ADDRESS);
     const dai = await Dai.at(DAI_ADDRESS);
 
     const wethTransaction = await weth.deposit({value: amountIn}) 
-
+    
     console.log('Weth Buy Transaction :',wethTransaction.tx);
+
     const wethApproveTransaction = await weth.approve(router.address, amountIn);
      
     console.log('Weth Approval Transaction for Uniswap Router',wethApproveTransaction.tx);
+
     const amountsOut = await router.getAmountsOut(amountIn, [WETH_ADDRESS, DAI_ADDRESS]);
+    
     const amountOutMin = amountsOut[1]
         .mul(web3.utils.toBN(90))
         .div(web3.utils.toBN(100));   
@@ -39,6 +43,7 @@ module.exports = async done => {
     console.log('Token Swap Transaction Hash on Uniswap: ', swapTransaction.tx);
     
     const balanceDaiAfter = await dai.balanceOf(admin);
+
     const executionPerf = balanceDaiAfter.sub(balanceDaiBefore).div(amountsOut[1]);
     console.log(executionPerf.toString());
   } catch(e) {

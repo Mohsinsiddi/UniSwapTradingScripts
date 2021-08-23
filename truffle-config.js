@@ -1,6 +1,6 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const mnemonic = 'normal absurd supreme start sport various toe sausage level few jelly salt';
-const rinkebyUrl = 'wss://rinkeby.infura.io/ws/v3/e63e2bf7da29499c99a7560a7a4441b7'; 
+const mnemonic = '';
+const rinkebyUrl = ''; 
 
 /**
  * Use this file to configure your truffle project. It's seeded with some
